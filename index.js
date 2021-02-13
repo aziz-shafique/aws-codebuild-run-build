@@ -19,7 +19,7 @@ async function run() {
 
     console.log("*****CODEBUILD DETAILS*****", JSON.stringify(build));
 
-    core.setOutput("aws-build-number", build.number);
+    core.setOutput("aws-build-number", build.buildNumber);
 
     // Signal the outcome
     assert(
