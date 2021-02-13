@@ -16,10 +16,9 @@ async function run() {
   console.log("*****STARTING CODEBUILD*****");
   try {
     const build = await runBuild();
-
-    console.log("*****CODEBUILD DETAILS*****", JSON.stringify(build));
-
-    core.setOutput("aws-build-number", build.buildNumber);
+    console.log("*****CODEBUILD DETAILS*****");
+    console.log(JSON.stringify(build));
+    core.setOutput("aws-build-number", build.buildNumber.toString());
 
     // Signal the outcome
     assert(
@@ -27,6 +26,8 @@ async function run() {
       `Build status: ${build.buildStatus}`
     );
   } catch (error) {
+    console.log("*****CODEBUILD ERROR*****");
+    console.log(error.message);
     core.setFailed(error.message);
   } finally {
     console.log("*****CODEBUILD COMPLETE*****");
