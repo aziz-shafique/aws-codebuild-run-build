@@ -17,6 +17,9 @@ This action offers three inputs that you can use to configure its behavior.
 The only required input is `project-name`.
 
 1. **project-name** (required) : The name of CodeBuild project you want to run.
+1. **source-version-override** (optional) :
+   The source version you would like to show up in CodeBuild.
+   By default, the action uses the `GITHUB_SHA` from the GitHub Action run.
 1. **buildspec-override** (optional) :
    The location (in this repository) of the [buildspec file][codebuild buildspec]
    that CodeBuild requires.
@@ -39,7 +42,7 @@ The only required input is `project-name`.
 
 ### Outputs
 
-1. **aws-build-id** : The CodeBuild build ID of the build that the action ran.
+1. **aws-build-number** : The CodeBuild build Number of the build that the action ran.
 
 ## Purpose
 
@@ -161,6 +164,7 @@ this will overwrite them.
   uses: aws-actions/aws-codebuild-run-build@v1.0.3
   with:
     project-name: CodeBuildProjectName
+    source-version-override: master
     buildspec-override: path/to/buildspec.yaml
     env-vars-for-codebuild: |
       custom,
@@ -213,11 +217,11 @@ plus any environment variables that you specified in the `evn-passthrough` input
 Regardless of the project configuration in CodeBuild or GitHub Actions,
 we always pass the following parameters and values to CodeBuild in the StartBuild API call.
 
-| CodeBuild value          | GitHub value                           |
-| ------------------------ | -------------------------------------- |
-| `sourceVersion`          | The commit that triggered the workflow |
-| `sourceTypeOverride`     | The string `'GITHUB'`                  |
-| `sourceLocationOverride` | The `HTTPS` git url for `context.repo` |
+| CodeBuild value          | GitHub value                                                          |
+| ------------------------ | --------------------------------------------------------------------- |
+| `sourceVersion`          | The commit that triggered the workflow or the source-version-override |
+| `sourceTypeOverride`     | The string `'GITHUB'`                                                 |
+| `sourceLocationOverride` | The `HTTPS` git url for `context.repo`                                |
 
 ### What we did not do
 

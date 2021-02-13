@@ -15,6 +15,11 @@ const { projectName, buildspecOverride, envPassthrough, remote } = yargs
     demandOption: true,
     type: "string",
   })
+  .option("source-version-override", {
+    alias: "s",
+    describe: "Source Version override",
+    type: "string"
+  })
   .option("buildspec-override", {
     alias: "b",
     describe: "Path to buildspec file",
